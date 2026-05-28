@@ -74,8 +74,8 @@ main{padding:2vh 8vw 12vh}
 .ci{position:relative;width:100%}
 .vcard .ci{aspect-ratio:16/9}
 .scard .ci{aspect-ratio:9/16}
-.ci img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.25,.46,.45,.94),filter .5s ease;filter:brightness(.78) saturate(.82)}
-.card:hover .ci img{transform:scale(1.06);filter:brightness(1) saturate(1.05)}
+.ci img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.25,.46,.45,.94),filter .5s ease;filter:brightness(.78) saturate(.82);transform:scale(var(--zoom,1))}
+.card:hover .ci img{transform:scale(calc(var(--zoom,1) * 1.06));filter:brightness(1) saturate(1.05)}
 .ph{position:absolute;inset:0;background:linear-gradient(135deg,#0c0c10 0%,#181820 100%);display:flex;align-items:center;justify-content:center}
 .ph svg{opacity:.1}
 .ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,rgba(0,0,0,.06) 55%,transparent 100%);opacity:0;transition:opacity .38s ease;display:flex;flex-direction:column;justify-content:flex-end;padding:1.2rem;z-index:2}
@@ -221,7 +221,7 @@ const S=[
   {id:'wQTOVG1OK0Y',t:'Glamorous AI Outfit Ideas'},
   {id:'UgnfZytLMXo',t:'AI Street Style Transformation'},
   {id:'3REL9xuFzG4',t:'AI Fashion Lookbook'},
-  {id:'xBluM99mZw0',t:'AI Art in Action: Sketch to Reality'},
+  {id:'xBluM99mZw0',t:'AI Art in Action: Sketch to Reality',zoom:1.15},
   {id:'QbNPKuXn1yA',t:'Dance of Life: Water Spirits'},
   {id:'Nr9ErhcCbOk',t:'AI Makeup Party'},
   {id:'XXkmvr3QU-g',t:'ASMR AI Creation'},
@@ -305,6 +305,7 @@ function mkCard(item,cls){
   ci.appendChild(ph);
   const img=document.createElement('img');
   img.src=item.thumb||`https://img.youtube.com/vi/${item.id}/hqdefault.jpg`;
+  if(item.zoom) img.style.setProperty('--zoom',item.zoom);
   img.alt=item.t||'';img.loading='lazy';
   img.onerror=function(){this.style.opacity='0'};
   ci.appendChild(img);
