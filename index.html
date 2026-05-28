@@ -96,15 +96,29 @@ main{padding:2vh 8vw 12vh}
 .lb{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .32s ease}
 .lb.open{opacity:1;pointer-events:all}
 .lbbg{position:absolute;inset:0;background:rgba(0,0,0,.93);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
-.lbbox{position:relative;z-index:1;width:90vw;max-width:1080px;transform:scale(.95);transition:transform .38s cubic-bezier(.34,1.56,.64,1)}
+.lbbox{position:relative;z-index:1;width:90vw;max-width:1080px;max-height:92vh;overflow-y:auto;transform:scale(.95);transition:transform .38s cubic-bezier(.34,1.56,.64,1);scrollbar-width:thin;scrollbar-color:rgba(200,160,71,.3) transparent}
+.lbbox::-webkit-scrollbar{width:6px}
+.lbbox::-webkit-scrollbar-thumb{background:rgba(200,160,71,.3);border-radius:3px}
 .lb.open .lbbox{transform:scale(1)}
 .lbbox.short{max-width:400px;width:38vw}
 .lbfw{position:relative;width:100%;overflow:hidden}
 .lbfw.vr{aspect-ratio:16/9}
 .lbfw.sr{aspect-ratio:9/16}
 .lbfw iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
-.lbx{position:absolute;top:-2.5rem;right:0;background:none;border:none;color:var(--dim);font-size:1.4rem;font-family:'DM Mono',monospace;padding:.5rem;transition:color .2s ease;line-height:1}
+.lbx{position:absolute;top:-2.5rem;right:0;background:none;border:none;color:var(--dim);font-size:1.4rem;font-family:'DM Mono',monospace;padding:.5rem;transition:color .2s ease;line-height:1;z-index:5}
 .lbx:hover{color:var(--txt)}
+
+/* Lightbox info */
+.lbinfo{margin-top:1.7rem;padding:0 .2rem .4rem;color:var(--txt)}
+.lbeyebrow{font-size:.5rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:.7rem;opacity:.75}
+.lbtitle{font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:300;font-style:italic;color:var(--txt);margin-bottom:1.4rem;letter-spacing:.005em;line-height:1.25}
+.lbdivider{height:1px;background:linear-gradient(to right,rgba(200,160,71,.35),rgba(200,160,71,.05) 50%,transparent);margin:0 0 1.5rem}
+.lbgrid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem 2.5rem}
+.lbfield{display:flex;flex-direction:column;gap:.5rem;padding-left:.95rem;border-left:1px solid rgba(200,160,71,.22)}
+.lblabel{font-size:.5rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);opacity:.78}
+.lbvalue{font-size:.72rem;line-height:1.75;color:var(--txt);font-family:'DM Mono',monospace}
+.lbvalue.ph{color:var(--dim);font-style:italic;opacity:.5}
+@media(max-width:700px){.lbgrid{grid-template-columns:1fr;gap:1rem}.lbtitle{font-size:1.3rem}}
 
 /* Fallback (file protocol or embed error) */
 .fbk{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem}
@@ -184,6 +198,7 @@ footer{padding:3.5rem 8vw;border-top:1px solid var(--brd);display:flex;justify-c
   <div class="lbbox" id="lbbox">
     <button class="lbx" id="lbx">&#x2715;</button>
     <div class="lbfw" id="lbfw"></div>
+    <div class="lbinfo" id="lbinfo"></div>
   </div>
 </div>
 
@@ -235,8 +250,25 @@ const IS_FILE = location.protocol === 'file:' || location.protocol === 'about:';
 if(IS_FILE) document.body.classList.add('is-file');
 
 /* ---- Lightbox state ---- */
-const lb=document.getElementById('lb'),lbbox=document.getElementById('lbbox'),lbfw=document.getElementById('lbfw');
+const lb=document.getElementById('lb'),lbbox=document.getElementById('lbbox'),lbfw=document.getElementById('lbfw'),lbinfo=document.getElementById('lbinfo');
 let currentId=null, currentShort=false;
+
+const LB_FIELDS=[
+  {key:'desc',label:'Brief',ph:'Add a short description of the work…'},
+  {key:'tools',label:'Tools',ph:'AI model / software used…'},
+  {key:'year',label:'Year',ph:'—'},
+  {key:'process',label:'Process',ph:'Concept, workflow notes, behind-the-scenes…'}
+];
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function infoHTML(item){
+  const title=esc(item.t||'Untitled');
+  const eyebrow=esc(item.kind||(item._isShort?'Short':'Film'));
+  const fields=LB_FIELDS.map(f=>{
+    const v=item[f.key];
+    return `<div class="lbfield"><div class="lblabel">${esc(f.label)}</div><div class="lbvalue${v?'':' ph'}">${esc(v||f.ph)}</div></div>`;
+  }).join('');
+  return `<div class="lbeyebrow">${eyebrow}</div><div class="lbtitle">${title}</div><div class="lbdivider"></div><div class="lbgrid">${fields}</div>`;
+}
 
 function ytEmbedUrl(id){
   return `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&enablejsapi=1&origin=${encodeURIComponent(location.origin||location.href)}`;
@@ -257,7 +289,8 @@ function fallbackHTML(id){
   </div>`;
 }
 
-function openLB(id, short){
+function openLB(item, short){
+  const id=item.id;
   currentId=id; currentShort=short;
   lbbox.className=short?'lbbox short':'lbbox';
   lbfw.className=short?'lbfw sr':'lbfw vr';
@@ -270,6 +303,10 @@ function openLB(id, short){
     lbfw.innerHTML=`<iframe src="${ytEmbedUrl(id)}" allow="autoplay;fullscreen;encrypted-media" allowfullscreen></iframe>`;
   }
 
+  item._isShort=short;
+  lbinfo.innerHTML=infoHTML(item);
+  lbbox.scrollTop=0;
+
   lb.classList.add('open');
   document.body.style.overflow='hidden';
 }
@@ -277,7 +314,7 @@ function openLB(id, short){
 function closeLB(){
   lb.classList.remove('open');
   document.body.style.overflow='';
-  setTimeout(()=>{lbfw.innerHTML=''},350);
+  setTimeout(()=>{lbfw.innerHTML='';lbinfo.innerHTML=''},350);
 }
 
 document.getElementById('lbbg').onclick=closeLB;
@@ -315,7 +352,7 @@ function mkCard(item,cls){
   pl.appendChild(tr);ov.appendChild(pl);
   if(item.t){const tt=document.createElement('div');tt.className='ctitle';tt.textContent=item.t;ov.appendChild(tt)}
   ci.appendChild(ov);a.appendChild(ci);
-  a.addEventListener('click',e=>{e.preventDefault();openLB(item.id,cls==='scard')});
+  a.addEventListener('click',e=>{e.preventDefault();openLB(item,cls==='scard')});
   return a;
 }
 
