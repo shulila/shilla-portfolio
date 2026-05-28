@@ -117,7 +117,7 @@ main{padding:2vh 8vw 12vh}
 .lbfield{display:flex;flex-direction:column;gap:.5rem;padding-left:.95rem;border-left:1px solid rgba(200,160,71,.22)}
 .lblabel{font-size:.5rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);opacity:.78}
 .lbvalue{font-size:.72rem;line-height:1.75;color:var(--txt);font-family:'DM Mono',monospace}
-.lbvalue.ph{color:var(--dim);font-style:italic;opacity:.5}
+.lbvalue.empty{color:var(--dim);font-style:italic;opacity:.5}
 @media(max-width:700px){.lbgrid{grid-template-columns:1fr;gap:1rem}.lbtitle{font-size:1.3rem}}
 
 /* Fallback (file protocol or embed error) */
@@ -265,7 +265,7 @@ function infoHTML(item){
   const eyebrow=esc(item.kind||(item._isShort?'Short':'Film'));
   const fields=LB_FIELDS.map(f=>{
     const v=item[f.key];
-    return `<div class="lbfield"><div class="lblabel">${esc(f.label)}</div><div class="lbvalue${v?'':' ph'}">${esc(v||f.ph)}</div></div>`;
+    return `<div class="lbfield"><div class="lblabel">${esc(f.label)}</div><div class="lbvalue${v?'':' empty'}">${esc(v||f.ph)}</div></div>`;
   }).join('');
   return `<div class="lbeyebrow">${eyebrow}</div><div class="lbtitle">${title}</div><div class="lbdivider"></div><div class="lbgrid">${fields}</div>`;
 }
