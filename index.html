@@ -64,12 +64,13 @@ main{padding:2vh 8vw 12vh}
 .sc{font-size:.5rem;letter-spacing:.2em;color:var(--dim)}
 
 /* Grids */
-.vgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
-.sgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:2px}
+.vgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.sgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
 
 /* Card */
-.card{position:relative;overflow:hidden;background:var(--surf);display:block;text-decoration:none;opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s ease}
+.card{position:relative;overflow:hidden;background:var(--surf);display:block;text-decoration:none;opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .5s cubic-bezier(.25,.46,.45,.94),box-shadow .5s ease;border-radius:14px;box-shadow:0 6px 18px rgba(0,0,0,.32)}
 .card.vis{opacity:1;transform:translateY(0)}
+.card.vis:hover{transform:translateY(-6px);box-shadow:0 22px 48px rgba(0,0,0,.55),0 0 0 1px rgba(200,160,71,.18)}
 .ci{position:relative;width:100%}
 .vcard .ci{aspect-ratio:16/9}
 .scard .ci{aspect-ratio:9/16}
@@ -88,7 +89,7 @@ main{padding:2vh 8vw 12vh}
 .scard .play{width:36px;height:36px;margin-bottom:.5rem}
 .scard .tri{border-left:9px solid var(--gold);border-top:5px solid transparent;border-bottom:5px solid transparent;margin-left:2px}
 .scard .ctitle{font-size:.7rem}
-.card::after{content:'';position:absolute;inset:0;border:1.5px solid transparent;transition:border-color .38s ease;z-index:3;pointer-events:none}
+.card::after{content:'';position:absolute;inset:0;border:1.5px solid transparent;border-radius:14px;transition:border-color .38s ease;z-index:3;pointer-events:none}
 .card:hover::after{border-color:rgba(200,160,71,.45)}
 
 /* Lightbox */
