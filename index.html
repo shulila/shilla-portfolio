@@ -189,7 +189,7 @@ footer{padding:3.5rem 8vw;border-top:1px solid var(--brd);display:flex;justify-c
 <script>
 /* ---- DATA (private videos removed) ---- */
 const V=[
-  {id:'8nyeh4BTEg4',t:'Arlozorov Final'},
+  {id:'8nyeh4BTEg4',t:'Arlozorov Final',thumb:'https://img.youtube.com/vi/8nyeh4BTEg4/hq1.jpg'},
   {id:'6uxVeYJWgxY',t:'Custom AI Film Trailer \u2013 Cinematic Story Brought to Life'},
   {id:'E1DDRPfPFns',t:''},
   {id:'WTe-NTWFkS0',t:''},
@@ -303,7 +303,7 @@ function mkCard(item,cls){
   ph.innerHTML='<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
   ci.appendChild(ph);
   const img=document.createElement('img');
-  img.src=`https://img.youtube.com/vi/${item.id}/hqdefault.jpg`;
+  img.src=item.thumb||`https://img.youtube.com/vi/${item.id}/hqdefault.jpg`;
   img.alt=item.t||'';img.loading='lazy';
   img.onerror=function(){this.style.opacity='0'};
   ci.appendChild(img);
