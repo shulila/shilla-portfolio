@@ -30,19 +30,10 @@ body.has-cursor *{cursor:none!important}
 header{height:100vh;min-height:580px;display:flex;flex-direction:column;justify-content:center;padding:0 8vw;position:relative;overflow:hidden}
 header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 19% 58%,rgba(168,85,255,.18) 0%,transparent 56%),radial-gradient(ellipse at 74% 30%,rgba(211,91,255,.1) 0%,transparent 52%),linear-gradient(115deg,transparent 0 58%,rgba(124,77,255,.06) 58% 59%,transparent 59%);pointer-events:none}
 header::after{content:'';position:absolute;left:8vw;right:8vw;top:18vh;height:1px;background:linear-gradient(to right,transparent,rgba(168,85,255,.55),rgba(211,91,255,.24),transparent);filter:drop-shadow(0 0 12px rgba(168,85,255,.7));opacity:.55;pointer-events:none}
-.eyebrow{font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:2.3rem;opacity:0;animation:fu .8s ease .25s forwards;text-shadow:0 0 18px rgba(168,85,255,.68),0 0 34px rgba(124,77,255,.28)}
 .h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(4.8rem,10vw,9.2rem);line-height:.9;letter-spacing:0;margin-bottom:2.35rem;text-shadow:0 0 28px rgba(168,85,255,.18)}
 .h1 .l1{display:block;color:var(--txt);opacity:0;animation:fu 1s ease .45s forwards}
 .h1 .l2{display:block;font-style:italic;color:var(--gold);opacity:0;animation:fu 1s ease .65s forwards;text-shadow:0 0 24px rgba(168,85,255,.65),0 0 58px rgba(124,77,255,.3)}
-.hdesc{font-size:.88rem;letter-spacing:.1em;color:rgba(232,226,216,.58);text-transform:uppercase;line-height:2.15;max-width:38ch;opacity:0;animation:fu .8s ease .85s forwards}
-.hstats{position:absolute;right:8vw;bottom:9vh;display:flex;gap:4rem;opacity:0;animation:fu .8s ease 1.05s forwards}
-.stat .n{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;line-height:1;color:var(--txt)}
-.stat .l{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-top:.35rem}
-.scrollcue{position:absolute;bottom:4.5vh;left:8vw;display:flex;align-items:center;gap:1.2rem;opacity:0;animation:fu .8s ease 1.25s forwards}
-.scrollcue span{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
-.scline{width:58px;height:1px;background:linear-gradient(to right,var(--gold),transparent);position:relative;overflow:hidden;box-shadow:0 0 14px rgba(168,85,255,.65)}
-.scline::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:rgba(255,255,255,.4);animation:sl 2.5s ease infinite}
-@keyframes sl{0%{left:-60%}100%{left:120%}}
+.htag{font-size:1rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(232,226,216,.7);opacity:0;animation:fu .8s ease .9s forwards;text-shadow:0 0 16px rgba(168,85,255,.42);max-width:42ch}
 @keyframes fu{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 
 /* Nav */
@@ -139,7 +130,7 @@ footer{padding:3.5rem 8vw;border-top:1px solid var(--brd);display:flex;justify-c
 
 /* Responsive */
 @media(max-width:1100px){.vgrid{grid-template-columns:repeat(2,1fr)}.sgrid{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:700px){.h1{font-size:clamp(3.5rem,18vw,6rem)}.hstats{display:none}.vgrid{grid-template-columns:1fr}.sgrid{grid-template-columns:repeat(2,1fr)}.lbbox.short{width:78vw}}
+@media(max-width:700px){.h1{font-size:clamp(3.5rem,18vw,6rem)}.vgrid{grid-template-columns:1fr}.sgrid{grid-template-columns:repeat(2,1fr)}.lbbox.short{width:78vw}}
 
 /* Small mobile */
 @media(max-width:480px){
@@ -150,9 +141,7 @@ footer{padding:3.5rem 8vw;border-top:1px solid var(--brd);display:flex;justify-c
   .nbtn:first-child{padding-left:0}
   .nbtn::after{left:1rem;right:1rem}
   .nbtn:first-child::after{left:0}
-  .eyebrow{font-size:.68rem;margin-bottom:1.8rem;letter-spacing:.13em}
-  .hdesc{font-size:.74rem;line-height:2.05;letter-spacing:.06em}
-  .scrollcue{bottom:3.5vh;left:5vw}
+  .htag{font-size:.82rem;line-height:1.7;letter-spacing:.1em}
   footer{padding:2.5rem 5vw;flex-direction:column;align-items:flex-start;gap:1.4rem}
   .finfo{text-align:left;font-size:.68rem}
   .fmark{font-size:1.42rem}
@@ -191,25 +180,11 @@ footer{padding:3.5rem 8vw;border-top:1px solid var(--brd);display:flex;justify-c
 </div>
 
 <header>
-  <p class="eyebrow">AI Creative Portfolio &middot; Animation &middot; Film &middot; Character Design</p>
   <h1 class="h1">
     <span class="l1">SHILLA</span>
     <span class="l2">Bahar</span>
   </h1>
-  <p class="hdesc">
-    Generative art direction<br>
-    Character &amp; fashion design<br>
-    Cinematic AI animation
-  </p>
-  <div class="hstats">
-    <div class="stat"><div class="n" id="sv-n">20</div><div class="l">Videos</div></div>
-    <div class="stat"><div class="n">17</div><div class="l">Shorts</div></div>
-    <div class="stat"><div class="n">37</div><div class="l">Total Works</div></div>
-  </div>
-  <div class="scrollcue">
-    <span>Explore</span>
-    <div class="scline"></div>
-  </div>
+  <p class="htag">AI Creative Portfolio</p>
 </header>
 
 <nav>
