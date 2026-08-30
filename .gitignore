@@ -2,3 +2,6 @@
 .playwright-mcp/
 node_modules/
 *.log
+hero-clean-*.png
+neon-*.png
+purple-*.png
